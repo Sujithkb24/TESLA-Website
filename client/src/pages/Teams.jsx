@@ -1,14 +1,31 @@
 import React from 'react';
-import { AnimatePresence } from 'framer-motion';
 import TeamsHero from '../components/TeamsHero';
-
+import TeamCarousel from '../components/TeamCarousel';
+import MeetTheTeam from '../components/MeetTheTeam';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+import TeamMembers from '../components/TeamMembers';
 const Teams = () => {
   return (
-    <AnimatePresence mode="wait">
+    <>
+      <Navbar />
+      {/* Teams Hero at the top */}
       <div className="relative w-full h-full">
+        {/* <Navbar /> */}
         <TeamsHero />
       </div>
-    </AnimatePresence>
+
+      {/* Sticky Horizontal Scroll Carousel */}
+      <div><TeamCarousel /></div>
+
+      {/* Meet the Team Section */}
+      <div>
+        <TeamMembers/>
+      </div>
+
+      {/* Footer */}
+      <Footer />
+    </>
   );
 };
 

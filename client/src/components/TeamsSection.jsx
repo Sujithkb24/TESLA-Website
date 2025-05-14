@@ -9,17 +9,17 @@ const TeamsSection = () => {
 
   const handleExplore = () => {
     setFadeOutContent(true);
-    setFadeOutOverlay(true); // Trigger both at the same time
+    setFadeOutOverlay(true);
   
     setTimeout(() => {
       navigate('/teams', { state: { transitioning: true } });
-    }, 700); // Navigate after the fade-out animation completes
+    }, 700);
   };
   
-
   return (
     <motion.div 
-      className="relative inset-0 w-full h-full overflow-hidden"
+      className="relative w-full h-screen flex flex-col overflow-hidden"
+      style={{ height: "100dvh" }} // This is the key fix
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -34,7 +34,7 @@ const TeamsSection = () => {
       >
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full"
-          style={{ backgroundImage: "url('/TeamPhoto.jpg')" }}
+          style={{ backgroundImage: "url('/Tesla_photos/Tesla_group.JPG')" }}
         />
       </motion.div>
 
@@ -55,11 +55,10 @@ const TeamsSection = () => {
         }}
         animate={{ opacity: fadeOutOverlay ? 0 : 1 }}
         transition={{ duration: 0.9, ease: "easeInOut" }}
-
       />
 
       {/* Content Section */}
-      <div className="relative z-10 h-full flex flex-col px-8 sm:px-16 pt-16">
+      <div className="relative z-10 h-full flex flex-col px-4 sm:px-8 md:px-16 pt-12 sm:pt-16">
         {/* Heading & Description */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -68,7 +67,7 @@ const TeamsSection = () => {
           className="max-w-2xl"
         >
           <motion.h1 
-            className="text-6xl sm:text-8xl font-bold text-[#B8860B] tracking-tight"
+            className="text-4xl sm:text-6xl md:text-8xl font-bold text-[#D3AF37] tracking-tight"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: fadeOutContent ? 0.95 : 1, opacity: fadeOutContent ? 0 : 1 }}
             transition={{ duration: 0.5 }}
@@ -77,7 +76,7 @@ const TeamsSection = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-white text-lg sm:text-xl mt-4 leading-relaxed"
+            className="text-white text-base sm:text-lg md:text-xl mt-2 sm:mt-4 leading-relaxed line-clamp-3 sm:line-clamp-4 md:line-clamp-none"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: fadeOutContent ? 0 : 1, y: fadeOutContent ? 20 : 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -87,16 +86,19 @@ const TeamsSection = () => {
           </motion.p>
         </motion.div>
 
+        {/* Flex spacer to push button to bottom */}
+        <div className="flex-grow"></div>
+
         {/* Explore More Button */}
         <motion.div 
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+          className="flex justify-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: fadeOutContent ? 0 : 1, y: fadeOutContent ? 20 : 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <motion.button
             onClick={handleExplore}
-            className="px-8 py-4 bg-[#B8860B] text-black text-lg font-semibold rounded-full 
+            className="px-6 sm:px-8 py-3 sm:py-4 bg-[#FFD700] text-black text-base sm:text-lg font-semibold rounded-full 
                      hover:bg-[#DAA520] transition-all duration-300 transform hover:scale-105
                      focus:outline-none focus:ring-2 focus:ring-[#B8860B] focus:ring-offset-2 focus:ring-offset-black"
             whileHover={{ scale: 1.05 }}
