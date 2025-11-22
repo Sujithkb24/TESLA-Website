@@ -16,6 +16,8 @@ import InitialSection from './components/InitialSection';
 // import Events from "./components/Events/Events"
 import AboutUs from './components/AboutUs';
 import Events from './pages/Events';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import ScrollToTop from './components/ScrollToTop';
 
 
@@ -39,6 +41,8 @@ function App() {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/teams" element={<Teams />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/electro" element={<ElectroSection />} />
           <Route path="/carousel" element={<TeamCarousel />} />
           <Route path="/meet" element={<MeetTheTeam />} />

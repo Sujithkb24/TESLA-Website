@@ -14,6 +14,7 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Events", path: "/events" },
+    { name: "Blog", path: "/blog" },
     { name: "Teams", path: "/teams" },
     { name: "Contact", path: "#footer" }, // Scroll to footer
   ];

@@ -10,34 +10,50 @@ function TimelineContainer() {
     const handleScroll = () => {
       if (timelineRef.current) {
         const container = timelineRef.current;
-        const containerTop = container.getBoundingClientRect().top;
-        const containerHeight = container.offsetHeight;
+        const containerRect = container.getBoundingClientRect();
+        const containerTop = containerRect.top;
+        const containerHeight = containerRect.height;
         const viewportHeight = window.innerHeight;
+        const viewportCenter = viewportHeight / 2;
 
         let progress = 0;
 
-        if (containerTop <= 0) {
-          const scrolledAmount = Math.abs(containerTop);
-          progress = Math.min(
-            scrolledAmount / (containerHeight - viewportHeight),
-            1
-          );
+        // Calculate progress based on how far the container has scrolled
+        // Ball should reach end when last event is at viewport center
+        if (containerTop <= viewportCenter) {
+          const scrolled = viewportCenter - containerTop;
+          const totalScroll = containerHeight - viewportHeight / 2;
+          progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+          
         }
 
-        setScrollPosition(progress * 100);
+        // Pass progress directly as 0-1 range
+        setScrollPosition(progress);
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    // Use requestAnimationFrame for smoother updates
+    let ticking = false;
+    const smoothScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", smoothScroll, { passive: true });
+    handleScroll(); // Initial call
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", smoothScroll);
     };
   }, []);
 
   return (
-    <div className="px-4 md:px-8 py-12" ref={timelineRef}>
+    <div className="pt-12 pb-12 md:pt-16 md:pb-20 lg:pt-20 lg:pb-24 overflow-visible" ref={timelineRef}>
       <Timeline items={timelineData} scrollProgress={scrollPosition} />
     </div>
   );

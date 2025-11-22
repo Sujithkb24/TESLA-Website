@@ -31,7 +31,7 @@ const InitialSection = forwardRef((props, ref) => {
         ref={textRef}
         className="relative z-10 text-left w-full max-w-7xl px-8 sm:px-16 opacity-0"
       >
-        <img src="/Tesla-logo.jpg" alt="Tesla"  className="h-48 md:min-h-auto"/>
+        <img src="/TESLA-Logo.png" alt="Tesla"  className="h-48 md:min-h-auto"/>
         <h1 className="text-8xl sm:text-7xl font-bold text-yellow-400 tracking-tight">
           TESLA-SJCE
         </h1>

@@ -24,7 +24,13 @@ const AboutUs = () => {
           </h1>
           <h1
             className="text-5xl md:text-9xl font-bold absolute top-12 md:top-16 left-0 z-10"
-            style={{ color: "var(--color-gold)" }}
+            style={{ 
+              color: "var(--color-gold)",
+              textShadow: `
+                2px 2px 8px rgba(0, 0, 0, 0.9), 
+                -2px -2px 8px rgba(0, 0, 0, 0.9)
+              `
+            }}
           >
             TESLA-SJCE
           </h1>

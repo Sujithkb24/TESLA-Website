@@ -53,7 +53,7 @@ const TeamsHero = () => {
             `
           }}
         >
-          TESLA 2024-2025
+          TESLA 2025-2026
         </h1>
       </motion.div>
     </motion.div>
