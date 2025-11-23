@@ -11,9 +11,5 @@ export default defineConfig({
   server: {
     host: '0.0.0.0', // Make it accessible to all devices in your network
   },
-   build: {
-    outDir: 'dist',   // output files will go to client/dist
-    emptyOutDir: true,
-  },
   base:process.env.VITE_BASE_PATH || "/tesla_web_sjce",
 })
