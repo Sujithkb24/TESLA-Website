@@ -20,6 +20,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import ScrollToTop from "./components/ScrollToTop";
 import Registration from "./pages/Registration";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   // const [array, setArray] = useState([]);
@@ -33,6 +34,21 @@ function App() {
   // useEffect(() => {
   //   fetchAPI();
   // }, []);
+  const ADMIN_SECRET_ID = import.meta.env.VITE_ADMIN_SECRET_ID; 
+  const AdminRoute = () => {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (id !== ADMIN_SECRET_ID) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+        <p>Not authorized</p>
+      </div>
+    );
+  }
+
+  return <AdminDashboard />;
+};
 
   return (
     <BrowserRouter>
@@ -40,6 +56,7 @@ function App() {
         <ScrollToTop />
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
+          <Route path="/Admin" element={<AdminRoute />} />
           <Route path="/teams" element={<Teams />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />

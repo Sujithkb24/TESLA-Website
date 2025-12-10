@@ -1,9 +1,11 @@
 const TeamRegistration = require('../models/TeamRegistration');
 
+// ✅ CREATE: Register new team (UPDATED)
 exports.createTeam = async (req, res) => {
+  
   try {
-    
     const {
+      teamName,        // ← NEW FIELD
       leaderName,
       leaderEmail,
       leaderPhone,
@@ -16,8 +18,9 @@ exports.createTeam = async (req, res) => {
       pptLink
     } = req.body;
 
-   
+    // ✅ Updated validation including teamName
     if (
+      !teamName ||      // ← NEW CHECK
       !leaderName ||
       !leaderEmail ||
       !leaderPhone ||
@@ -30,17 +33,18 @@ exports.createTeam = async (req, res) => {
     ) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide all required fields'
+        message: 'Please provide all required fields (Team Name is required)'
       });
     }
 
-    
+    // ✅ Create new team document with teamName
     const newTeam = new TeamRegistration({
+      teamName: teamName.trim(),
       leaderName: leaderName.trim(),
       leaderEmail: leaderEmail.trim(),
       leaderPhone: leaderPhone.trim(),
       leaderBranch,
-      leaderYear,
+      leaderYear: parseInt(leaderYear), // Ensure number type
       member1,
       member2,
       member3: member3 || null, // Optional
@@ -48,7 +52,7 @@ exports.createTeam = async (req, res) => {
       pptLink: pptLink.trim()
     });
 
-   
+    // ✅ Save to database
     const savedTeam = await newTeam.save();
 
     res.status(201).json({
@@ -57,7 +61,7 @@ exports.createTeam = async (req, res) => {
       data: savedTeam
     });
   } catch (error) {
-    
+    // ✅ Enhanced Mongoose validation error handling
     if (error.name === 'ValidationError') {
       const messages = Object.values(error.errors)
         .map(err => err.message)
@@ -69,7 +73,8 @@ exports.createTeam = async (req, res) => {
       });
     }
 
-    
+    // ✅ General server error
+    console.error('Create Team Error:', error); // Log for debugging
     res.status(500).json({
       success: false,
       message: 'Error registering team',
@@ -78,10 +83,10 @@ exports.createTeam = async (req, res) => {
   }
 };
 
-
+// ✅ READ: Get all teams
 exports.getAllTeams = async (req, res) => {
   try {
-    const teams = await TeamRegistration.find();
+    const teams = await TeamRegistration.find().sort({ createdAt: -1 }); // Latest first
 
     res.status(200).json({
       success: true,
@@ -89,6 +94,7 @@ exports.getAllTeams = async (req, res) => {
       data: teams
     });
   } catch (error) {
+    console.error('Get All Teams Error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching teams',
@@ -97,7 +103,7 @@ exports.getAllTeams = async (req, res) => {
   }
 };
 
-
+// ✅ READ: Get team by ID
 exports.getTeamById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -116,6 +122,7 @@ exports.getTeamById = async (req, res) => {
       data: team
     });
   } catch (error) {
+    console.error('Get Team By ID Error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching team',
@@ -124,18 +131,17 @@ exports.getTeamById = async (req, res) => {
   }
 };
 
-
+// ✅ UPDATE: Update team registration
 exports.updateTeam = async (req, res) => {
   try {
     const { id } = req.params;
 
-   
     const updatedTeam = await TeamRegistration.findByIdAndUpdate(
       id,
       req.body,
       {
-        new: true,
-        runValidators: true 
+        new: true,           // Return updated document
+        runValidators: true  // Run Mongoose validators
       }
     );
 
@@ -163,6 +169,7 @@ exports.updateTeam = async (req, res) => {
       });
     }
 
+    console.error('Update Team Error:', error);
     res.status(500).json({
       success: false,
       message: 'Error updating team',
@@ -171,7 +178,7 @@ exports.updateTeam = async (req, res) => {
   }
 };
 
-
+// ✅ DELETE: Delete team registration
 exports.deleteTeam = async (req, res) => {
   try {
     const { id } = req.params;
@@ -188,9 +195,14 @@ exports.deleteTeam = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Team deleted successfully',
-      data: deletedTeam
+      data: {
+        id: deletedTeam._id,
+        teamName: deletedTeam.teamName,
+        message: 'Registration cancelled'
+      }
     });
   } catch (error) {
+    console.error('Delete Team Error:', error);
     res.status(500).json({
       success: false,
       message: 'Error deleting team',

@@ -1,4 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", sans-serif;
+}
+
 
 :root {
   --color-gold: #C9A154;
@@ -60,6 +67,23 @@ html, body {
   flex-shrink: 0;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.85); opacity: 0 }
+  to { transform: scale(1); opacity: 1 }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.25s ease-out forwards;
+}
 
 
 
