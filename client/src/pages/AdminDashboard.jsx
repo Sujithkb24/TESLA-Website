@@ -29,7 +29,7 @@ const filteredTeams = teams.filter((team) =>
         }
         setTeams(data.data || []);
       } catch (err) {
-        setError("Unable to reach server. Check if backend is running.",err);
+        setError(err);
       } finally {
         setLoading(false);
       }
