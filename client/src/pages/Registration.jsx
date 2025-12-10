@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import { complex } from 'framer-motion';
 const Registration = () => {
   const navigate = useNavigate();
-  const BACKEND_URL = import.meta.env.VERCEL_BACKEND_URL;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [formData, setFormData] = useState({
     teamName: '',
     leaderName: '',

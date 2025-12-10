@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 
-const BACKEND_URL = import.meta.env.VERCEL_BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const AdminDashboard = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,6 +20,7 @@ const filteredTeams = teams.filter((team) =>
     const fetchTeams = async () => {
       try {
         setLoading(true);
+        console.log(BACKEND_URL);
         const res = await fetch(`${BACKEND_URL}/api/teams`);
         const data = await res.json();
 
