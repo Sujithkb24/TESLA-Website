@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -8,7 +9,12 @@ const teamRoutes = require('./routes/teamRoutes');
 const app = express();
 
 
-app.use(cors()); 
+app.use(cors({
+  origin: 'https://tesla-sjce.netlify.app',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+})); 
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); 
 
